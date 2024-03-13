@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ItemServiceImp implements ItemService{
-
+public class ItemServiceImp implements ItemService {
     @Autowired
     private ItemRepository iRepository;
     public List<Item> getItems()
