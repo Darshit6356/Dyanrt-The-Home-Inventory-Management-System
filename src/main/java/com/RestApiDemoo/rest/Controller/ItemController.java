@@ -1,7 +1,6 @@
 package com.RestApiDemoo.rest.Controller;
 
 import com.RestApiDemoo.rest.Model.Item;
-import com.RestApiDemoo.rest.Model.Item;
 import com.RestApiDemoo.rest.Service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
