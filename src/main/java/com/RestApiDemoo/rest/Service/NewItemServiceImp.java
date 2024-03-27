@@ -9,21 +9,21 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 @Service
-public class NewItemServiceImp implements NewItemService{
+public class NewItemServiceImp implements NewItemService {
 
     @Autowired
     private NewItemRepository niRepository;
-    public List<NewItem> getNewitem()
-    {
+
+    public List<NewItem> getNewitem() {
         return niRepository.findAll();
     }
 
     @Override
     public NewItem getNewitem(Long id) {
-        Optional<NewItem> it=niRepository.findById(id);
-        if(it.isPresent())
+        Optional<NewItem> it = niRepository.findById(id);
+        if (it.isPresent())
             return it.get();
-        throw new RuntimeException("Item with id "+id+" not found.");
+        throw new RuntimeException("Item with id " + id + " not found.");
     }
 
     public NewItem saveNewitem(NewItem it) {
@@ -31,17 +31,51 @@ public class NewItemServiceImp implements NewItemService{
     }
 
     public NewItem deleteNewitem(Long id) {
-        Optional<NewItem> it=niRepository.findById(id);
-        if(it.isPresent())
-        {
+        Optional<NewItem> it = niRepository.findById(id);
+        if (it.isPresent()) {
             niRepository.deleteById(id);
             return it.get();
         }
-        throw new RuntimeException("it with id "+id+" is not found");
+        throw new RuntimeException("it with id " + id + " is not found");
     }
 
     @Override
     public NewItem updateNewitem(NewItem it) {
         return niRepository.save(it);
+    }
+
+    // both below function is not yet called from controller
+    @Override
+    public NewItem removeQty(NewItem nit) {
+        Optional<NewItem> nie = niRepository.findById(nit.getNewitem_id());
+        long presentQty = 0;
+        if (nie.isPresent()) {
+            presentQty = nie.get().getNewitem_qty();
+        }
+        long removeQty = nit.getNewitem_qty();
+        if(presentQty - removeQty >=0){
+            nit.setNewitem_qty(presentQty-removeQty);
+//            nit.setNewitem_id(id);
+            return niRepository.save(nit);
+        }
+        else{
+            throw new RuntimeException("Not Suffiecient Qauntity in inventory to be remove");
+        }
+//        nit.setNewitem_qty(presentQty + removeQty);
+        //nit.setNewitem_id(id);
+
+    }
+
+    @Override
+    public NewItem addQty(NewItem nit) {
+        Optional<NewItem> nie = niRepository.findById(nit.getNewitem_id());
+        long presentQty = 0;
+        if (nie.isPresent()) {
+            presentQty = nie.get().getNewitem_qty();
+        }
+        long addQty = nit.getNewitem_qty();
+        nit.setNewitem_qty(presentQty + addQty);
+        //nit.setNewitem_id(id);
+        return niRepository.save(nit);
     }
 }

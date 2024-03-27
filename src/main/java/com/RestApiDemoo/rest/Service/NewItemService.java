@@ -15,4 +15,6 @@ public interface NewItemService {
     NewItem deleteNewitem(Long id);
 
     NewItem updateNewitem(NewItem it);
+    NewItem addQty(NewItem nit);
+    NewItem removeQty(NewItem nit);
 }
