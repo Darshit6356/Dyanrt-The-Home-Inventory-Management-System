@@ -26,7 +26,7 @@ public class ItemUsedController {
 
     @PostMapping
     public ItemUsed addItemUsed(@RequestBody ItemUsed itemUsed) {
-        System.out.println("Hello123123");
+//        System.out.println("Hello123123");
         return itemUsedService.saveItemUsed(itemUsed);
     }
 
