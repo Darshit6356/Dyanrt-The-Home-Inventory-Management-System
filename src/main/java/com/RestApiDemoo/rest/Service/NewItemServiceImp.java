@@ -69,13 +69,20 @@ public class NewItemServiceImp implements NewItemService {
     @Override
     public NewItem addQty(NewItem nit) {
         Optional<NewItem> nie = niRepository.findById(nit.getNewitem_id());
+        String pname ="";
         long presentQty = 0;
         if (nie.isPresent()) {
             presentQty = nie.get().getNewitem_qty();
+            pname=nie.get().getNewitem_name();
         }
+        String IncomingName = nit.getNewitem_name();
+        if(pname.equals(IncomingName)){
         long addQty = nit.getNewitem_qty();
         nit.setNewitem_qty(presentQty + addQty);
         //nit.setNewitem_id(id);
-        return niRepository.save(nit);
+        return niRepository.save(nit);}
+        else{
+            throw new RuntimeException("Name of the item is not same which you are trying to add");
+        }
     }
 }
