@@ -24,15 +24,16 @@ public class ShopingListController {
     public List<Item> generateShoppingList() {
         List<Item> items = itemsController.getItems();
         List<NewItem> newItems = newItemController.getNewitem();
-
+        long id=0;
         List<Item> shoppingList = new ArrayList<>();
-
         for (NewItem newItem : newItems) {
             for (Item item : items) {
                 if (newItem.getNewitem_name().equals(item.getName())) {
                     long neededQuantity = Math.max(0, item.getMin_Q() - newItem.getNewitem_qty());
                     if (neededQuantity > 0) {
+                        id=id+1;
                         Item shoppingListItem = new Item();
+                        shoppingListItem.setItem_id(id);
                         shoppingListItem.setName(item.getName());
                         shoppingListItem.setMin_Q(neededQuantity);
                         shoppingList.add(shoppingListItem);
